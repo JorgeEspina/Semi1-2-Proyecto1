@@ -1,0 +1,43 @@
+<img class="wave" src="../../../assets/img/wave.png" />
+<div class="container">
+  <div class="img">
+    <img src="../../../assets/img/bg.svg" />
+  </div>
+  <div class="login-content">
+    <form action="index.html">
+      <img src="../../../assets/img/avatar.svg" />
+      <div class="input-div one">
+        <div class="i">
+          <i class="fas fa-user"></i>
+        </div>
+        <div class="div">
+          <input
+            type="text"
+            class="form-control"
+            id="name"
+            name="name"
+            value=""
+            placeholder="Usuario"
+          />
+        </div>
+      </div>
+      <div class="input-div pass">
+        <div class="i">
+          <i class="fas fa-lock"></i>
+        </div>
+        <div class="div">
+          <input
+            type="password"
+            class="form-control"
+            id="password"
+            name="password"
+            value=""
+            placeholder="Password"
+          />
+        </div>
+      </div>
+      <input type="submit" class="btn" value="Login" (click)="InicioSesion()" />
+      <input type="submit" class="btn" value="Registro" (click)="Registro()" />
+    </form>
+  </div>
+</div>
