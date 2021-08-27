@@ -1,18 +1,18 @@
-import { AfterViewInit, Component, ViewChild, OnInit } from '@angular/core';
-import { NgModule } from '@angular/core';
-import { DatePipe } from '@angular/common';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
-  selector: 'app-principal',
-  templateUrl: './principal.component.html',
-  styleUrls: ['./principal.component.css'],
+  selector: 'app-delete',
+  templateUrl: './delete.component.html',
+  styleUrls: ['./delete.component.css'],
 })
-export class PrincipalComponent implements OnInit {
+export class DeleteComponent implements OnInit {
   ListPublicos: any = [];
   data: any = [];
+
   //Codigo tabla
   displayedColumns: string[] = ['Nombre', 'Fecha', 'Hora', 'Accion'];
   dataSource: MatTableDataSource<any> = new MatTableDataSource(
@@ -20,7 +20,8 @@ export class PrincipalComponent implements OnInit {
   );
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
-  constructor() {
+
+  constructor(private router: Router, private activedRoute: ActivatedRoute) {
     this.loadScripts();
   }
 
@@ -71,5 +72,10 @@ export class PrincipalComponent implements OnInit {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+  Delete() {}
+
+  Regresar() {
+    this.router.navigate(['/Principal']);
   }
 }

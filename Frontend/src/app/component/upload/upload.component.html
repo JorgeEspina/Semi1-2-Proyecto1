@@ -1,0 +1,85 @@
+<img class="wave" src="../../../assets/img/wave.png" />
+<div class="container">
+  <div class="img">
+    <img src="../../../assets/img/Upload_re.svg" />
+  </div>
+  <div class="login-content">
+    <form action="index.html">
+      <input
+        type="submit"
+        class="btn"
+        value="Seleccionar Archivo"
+        (click)="SelecionarArchivo()"
+      />
+      <div class="input-div one">
+        <div class="i">
+          <i class="fas fa-file-upload"></i>
+        </div>
+        <div class="div">
+          <input
+            type="text"
+            class="form-control"
+            id="ruta"
+            name="ruta"
+            value=""
+            placeholder="Ruta de Archivo"
+          />
+        </div>
+      </div>
+      <div class="input-div one">
+        <div class="i">
+          <i class="far fa-file"></i>
+        </div>
+        <div class="div">
+          <input
+            type="text"
+            class="form-control"
+            id="name"
+            name="name"
+            value=""
+            placeholder="Nombre de Archivo"
+          />
+        </div>
+      </div>
+      <div class="input-div one">
+        <div class="div">
+          <div class="i">
+            <i class="fas fa-folder"></i>
+          </div>
+          <select
+            class="browser-default custom-select"
+            name="seltipo"
+            (change)="capturarTipo()"
+            [(ngModel)]="TipoSeleccionado"
+          >
+            <option value="Tipo Archivo">Tipo Archivo</option>
+            <option value="Publico">Publico</option>
+            <option value="Privado">Privado</option>
+          </select>
+        </div>
+      </div>
+      <div class="input-div pass">
+        <div class="i">
+          <i class="fas fa-lock"></i>
+        </div>
+        <div class="div">
+          <input
+            type="password"
+            class="form-control"
+            id="password"
+            name="password"
+            value=""
+            placeholder="Password"
+          />
+        </div>
+      </div>
+      <input
+        type="submit"
+        class="btn"
+        value="Cargar Archivo"
+        (click)="Cargar()"
+      />
+      <input type="submit" class="btn" value="Regresar" (click)="Regresar()" />
+    </form>
+  </div>
+</div>

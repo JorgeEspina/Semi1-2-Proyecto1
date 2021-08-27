@@ -1,1 +1,83 @@
-<p>registro works!</p>
+<div class="container">
+  <div class="img">
+    <img src="../../../assets/img/personal_info.svg" />
+  </div>
+  <div class="login-content">
+    <form action="index.html">
+      <img src="../../../assets/img/avatar.svg" />
+      <input
+        type="submit"
+        class="btn"
+        value="Seleccionar Foto"
+        (click)="AgregarFoto()"
+      />
+      <div class="input-div one">
+        <div class="i">
+          <i class="fas fa-user"></i>
+        </div>
+        <div class="div">
+          <input
+            type="text"
+            class="form-control"
+            id="name"
+            name="name"
+            value=""
+            placeholder="Usuario"
+          />
+        </div>
+      </div>
+      <div class="input-div one">
+        <div class="i">
+          <i class="far fa-envelope"></i>
+        </div>
+        <div class="div">
+          <input
+            type="email"
+            class="form-control"
+            id="email"
+            name="email"
+            value=""
+            placeholder="Correo Electronico"
+          />
+        </div>
+      </div>
+      <div class="input-div pass">
+        <div class="i">
+          <i class="fas fa-lock"></i>
+        </div>
+        <div class="div">
+          <input
+            type="password"
+            class="form-control"
+            id="password"
+            name="password"
+            value=""
+            placeholder="Password"
+          />
+        </div>
+      </div>
+      <div class="input-div pass">
+        <div class="i">
+          <i class="fas fa-lock"></i>
+        </div>
+        <div class="div">
+          <input
+            type="password"
+            class="form-control"
+            id="passwordconfirmacion"
+            name="passwordconfirmacion"
+            value=""
+            placeholder="Confirmacion Password"
+          />
+        </div>
+      </div>
+      <input
+        type="submit"
+        class="btn"
+        value="Registrarse"
+        (click)="Registrarse()"
+      />
+      <a href="">Regresar</a>
+    </form>
+  </div>
+</div>

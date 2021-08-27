@@ -1,3 +1,17 @@
+table {
+  width: 100%;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 75%;
+}
+
+td,
+th {
+  width: 22%;
+}
+
 * {
   padding: 0;
   margin: 0;
@@ -44,11 +58,11 @@ body {
 }
 
 form {
-  width: 360px;
+  width: 760px;
 }
 
 .login-content img {
-  height: 200px;
+  height: 100px;
 }
 
 .login-content h2 {
@@ -220,4 +234,12 @@ a:hover {
   .login-content {
     justify-content: center;
   }
+}
+
+.text {
+  display: inline-block;
+  color: #32be8f;
+  font-size: 50px;
+  font-weight: 500;
+  margin: 18px;
 }

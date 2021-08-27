@@ -1,16 +1,15 @@
-import { AfterViewInit, Component, ViewChild, OnInit } from '@angular/core';
-import { NgModule } from '@angular/core';
-import { DatePipe } from '@angular/common';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
-  selector: 'app-principal',
-  templateUrl: './principal.component.html',
-  styleUrls: ['./principal.component.css'],
+  selector: 'app-add',
+  templateUrl: './add.component.html',
+  styleUrls: ['./add.component.css'],
 })
-export class PrincipalComponent implements OnInit {
+export class AddComponent implements OnInit {
   ListPublicos: any = [];
   data: any = [];
   //Codigo tabla
@@ -20,7 +19,7 @@ export class PrincipalComponent implements OnInit {
   );
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
-  constructor() {
+  constructor(private router: Router, private activedRoute: ActivatedRoute) {
     this.loadScripts();
   }
 
@@ -71,5 +70,8 @@ export class PrincipalComponent implements OnInit {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+  Regresar() {
+    this.router.navigate(['/Principal']);
   }
 }

@@ -1,18 +1,20 @@
-import { AfterViewInit, Component, ViewChild, OnInit } from '@angular/core';
-import { NgModule } from '@angular/core';
-import { DatePipe } from '@angular/common';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
-  selector: 'app-principal',
-  templateUrl: './principal.component.html',
-  styleUrls: ['./principal.component.css'],
+  selector: 'app-edit',
+  templateUrl: './edit.component.html',
+  styleUrls: ['./edit.component.css'],
 })
-export class PrincipalComponent implements OnInit {
+export class EditComponent implements OnInit {
   ListPublicos: any = [];
   data: any = [];
+  // para selecion de tipo
+  TipoSeleccionado: string = null;
+  verSeleccionTipo: string = null;
   //Codigo tabla
   displayedColumns: string[] = ['Nombre', 'Fecha', 'Hora', 'Accion'];
   dataSource: MatTableDataSource<any> = new MatTableDataSource(
@@ -20,7 +22,8 @@ export class PrincipalComponent implements OnInit {
   );
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
-  constructor() {
+
+  constructor(private router: Router, private activedRoute: ActivatedRoute) {
     this.loadScripts();
   }
 
@@ -71,5 +74,20 @@ export class PrincipalComponent implements OnInit {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+  Update() {}
+  capturarTipo() {
+    this.verSeleccionTipo = this.TipoSeleccionado;
+    console.log(this.verSeleccionTipo);
+    /*if(this.verSeleccionTipo == "Todas los Tipos"){
+      this.usuario.tipo = '';
+    }else if(this.verSeleccionTipo == "Publico"){
+      this.usuario.tipo = 'Publico';
+    }else if(this.verSeleccionTipo == "Privado"){
+      this.usuario.tipo = 'Privado';
+    }*/
+  }
+  Regresar() {
+    this.router.navigate(['/Principal']);
   }
 }
