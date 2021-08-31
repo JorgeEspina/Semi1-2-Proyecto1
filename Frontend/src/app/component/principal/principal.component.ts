@@ -1,10 +1,9 @@
-import { AfterViewInit, Component, ViewChild, OnInit } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import { NgModule } from '@angular/core';
-import { DatePipe } from '@angular/common';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-
+import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-principal',
   templateUrl: './principal.component.html',
@@ -13,6 +12,7 @@ import { MatTableDataSource } from '@angular/material/table';
 export class PrincipalComponent implements OnInit {
   ListPublicos: any = [];
   data: any = [];
+
   //Codigo tabla
   displayedColumns: string[] = ['Nombre', 'Fecha', 'Hora', 'Accion'];
   dataSource: MatTableDataSource<any> = new MatTableDataSource(
@@ -20,10 +20,9 @@ export class PrincipalComponent implements OnInit {
   );
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
-  constructor() {
+  constructor(private router: Router, private activedRoute: ActivatedRoute) {
     this.loadScripts();
   }
-
   ngOnInit(): void {
     /*this.productosService.getProductosProveedor(this.usuario._id).subscribe(
       res => {
@@ -71,5 +70,31 @@ export class PrincipalComponent implements OnInit {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  add() {
+    this.router.navigate(['/Add']);
+  }
+  upload() {
+    this.router.navigate(['/Upload']);
+  }
+  edit() {
+    this.router.navigate(['/Edit']);
+  }
+  delete() {
+    this.router.navigate(['/Delete']);
+  }
+  public() {
+    this.router.navigate(['/Public']);
+  }
+
+  Principal() {
+    this.redirectTo('');
+    window.location.reload();
+  }
+  redirectTo(uri: string) {
+    this.router
+      .navigateByUrl('/', { skipLocationChange: true })
+      .then(() => this.router.navigate([uri]));
   }
 }
