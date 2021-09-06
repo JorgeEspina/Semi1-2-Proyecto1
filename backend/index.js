@@ -14,7 +14,6 @@ app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }))
 var port = 9000;
 app.listen(port);
 console.log('Listening on port', port);
-const AmazonCognitoIdentity = require('amazon-cognito-identity-js');
 
 
 const db_credentials = require('./db_creds');
@@ -69,12 +68,9 @@ app.post('/obtenerfoto', function (req, res) {
     if (err)
       res.json({ mensaje: "error" })
     //de bytes a base64
-
     var dataBase64 = Buffer.from(data.Body).toString('base64');
     res.json({ mensaje: dataBase64 })
-
   });
-
 });
 
 //--------------------------------------------------BASES DE DATOS ---------------------------------------
@@ -92,37 +88,20 @@ app.post('/login', async (req, res) => {
     if (result.length > 0) {
       hash = result[0].password;
       bcrypt.compare(password, hash).then(function (r) {
-        if(r){
+        if (r) {
           res.json({
             msg: true,
-            DatosUsuario:{
+            DatosUsuario: {
               "codigo": result[0].idUsuario,
               "nombre": result[0].nombre,
               "correo": result[0].correo,
               "foto": result[0].foto
             }
-
           })
         }
       });
     }
-
   })
-
-
-})
-
-app.get('/hash', (req, res) => {
-  bcrypt.hash('05', saltRounds, function (err, hash) {
-    res.send(hash);
-  });
-})
-
-app.get('/compare', (req, res) => {
-  bcrypt.compare('1', '$2b$10$N6ACaPFpuE1V0Pe2m2kwMu/fsJOyLxd6i3aWvr1yeP5dQIM3i2FyS', function (err, result) {
-    // result == true
-    res.send(result);
-  });
 })
 
 app.post('/signup', async (req, res) => {
@@ -153,15 +132,32 @@ app.post('/signup', async (req, res) => {
           conn.query(consulta, [nombre, correo, hash, data.Location], function (err, result) {
             if (err)
               throw err;
-              res.status(200).json({
-                msg: true
-              })
+            res.status(200).json({
+              msg: true
+            })
           })
         }
       });
     }
-
   });
+})
 
+app.get('/listausuarios', async (req,res) => {
+  let consulta = 'SELECT idUsuario, nombre, correo, foto FROM Usuario'
+  conn.query(consulta, [], function (err, result) {
+    if (err) throw err;
+    res.send(result);
+  })
+})
 
+app.post('/agregarAmigo',(req,res)=>{
+  const {idLog, correoLog, idAmigo, correoAmigo} = req.body
+
+  let consulta = 'INSERT INTO Detalle_Amigo (Usuario_idUsuario, Usuario_correo, Usuario_idUsuario1, Usuario_correo1) VALUES (?,?,?,?)'
+  conn.query(consulta, [idLog, correoLog, idAmigo, correoAmigo], function(err,resul){
+    if(err) throw err;
+    res.status(200).json({
+      msg: true
+    })
+  })
 })
