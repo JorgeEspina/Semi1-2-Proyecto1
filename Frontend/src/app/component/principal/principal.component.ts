@@ -4,6 +4,8 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Usuario } from '../../models/usuario';
+import { UsuarioService } from '../../services/usuario.service';
 @Component({
   selector: 'app-principal',
   templateUrl: './principal.component.html',
@@ -20,18 +22,55 @@ export class PrincipalComponent implements OnInit {
   );
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
-  constructor(private router: Router, private activedRoute: ActivatedRoute) {
+
+  usuario: Usuario = {
+    id: 0,
+    nombre: '',
+    correo: '',
+    password: '',
+    fotobase64: '',
+    extension: '',
+    passwordconfirmacion: '',
+  };
+  constructor(
+    private router: Router,
+    private activedRoute: ActivatedRoute,
+    private usuarioService: UsuarioService
+  ) {
     this.loadScripts();
   }
+  isLogged: boolean = false;
+
   ngOnInit(): void {
-    /*this.productosService.getProductosProveedor(this.usuario._id).subscribe(
-      res => {
-        //console.log(this.usuario._id)
-        this.productos = res.result;             
-        console.log(this.productos)
-      },
-      err => console.log(err)
-    )*/
+    this.getPermiso();
+    this.onCkeckUser();
+    //console.log(this.authService.getCurrentUser());
+    if (this.usuarioService.getCurrentUser().id == 0) {
+      console.log('no logueado usuario');
+      this.isLogged = false;
+    } else {
+      console.log('usuario logueado');
+      this.isLogged = true;
+    }
+  }
+  onCkeckUser(): void {
+    if (this.usuarioService.getCurrentUser() == null) {
+      console.log('no logueado usuario');
+      this.isLogged = false;
+    } else {
+      this.usuario = this.usuarioService.getCurrentUser();
+      console.log('usuario logueado 1');
+      console.log(this.usuario);
+      this.isLogged = true;
+    }
+  }
+  getPermiso() {
+    this.usuario = this.usuarioService.getCurrentUser();
+    console.log(this.usuario);
+    if (this.usuarioService.getCurrentUser() == null) {
+      console.log('no obtuvo mi locationstorage, no hay nadie logueado ');
+    } else {
+    }
   }
   loadScripts() {
     const dynamicScripts = ['../../../assets/js/script.js'];
@@ -43,6 +82,10 @@ export class PrincipalComponent implements OnInit {
       node.charset = 'utf-8';
       document.getElementsByTagName('head')[0].appendChild(node);
     }
+  }
+  onLogout(): void {
+    this.usuarioService.logoutUser();
+    this.router.navigate(['/']);
   }
   Buscar() {
     //console.log(new Date("2012-01-17T13:00:00Z"))

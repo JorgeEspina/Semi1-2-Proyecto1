@@ -68,10 +68,22 @@
         </li>-->
     <li class="profile">
       <div class="profile-details">
-        <img src="../../../assets/img/profile.jpg" alt="profileImg" />
+        <img
+          [src]="
+            usuario.fotobase64 == ''
+              ? '../../../assets/img/profile.jpg'
+              : usuario.fotobase64
+          "
+          class="rounded-circle"
+          width="40"
+          height="40"
+          alt="profileImg"
+        />
         <div class="name_job">
-          <div class="name">Prem Shahi</div>
-          <div class="job">Web designer</div>
+          <div class="name">
+            {{ usuario.nombre == "" ? "Sesion" : usuario.nombre }}
+          </div>
+          <div class="job">Usuario</div>
         </div>
       </div>
       <i class="bx bx-log-out" id="log_out"></i>
