@@ -98,7 +98,7 @@ app.post("/login", async (req, res) => {
 });
 
 app.post("/signup", async (req, res) => {
-  const { nombre, correo, password, fotobase64, extension } = req.body;
+  const { nombre, correo, password, fotobase64, extension, nombreImg } = req.body;
   let encodedImage = fotobase64;
   let decodedImage = Buffer.from(encodedImage, "base64");
   let filename = `${nombre}-${uuid()}.${extension}`;
@@ -110,6 +110,7 @@ app.post("/signup", async (req, res) => {
     Bucket: bucketname,
     Key: filepath,
     Body: decodedImage,
+    ContentType: "image",
     ACL: "public-read",
   };
   bcrypt.hash(password, saltRounds, function (err, hash) {
