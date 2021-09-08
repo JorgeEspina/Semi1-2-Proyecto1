@@ -98,7 +98,7 @@ app.post("/login", async (req, res) => {
 });
 
 app.post("/signup", async (req, res) => {
-  const { nombre, correo, password, fotobase64, extension, nombreImg } = req.body;
+  const { nombre, correo, password, fotobase64, extension } = req.body;
   let encodedImage = fotobase64;
   let decodedImage = Buffer.from(encodedImage, "base64");
   let filename = `${nombre}-${uuid()}.${extension}`;
