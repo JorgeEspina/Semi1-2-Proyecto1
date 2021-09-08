@@ -68,25 +68,15 @@
         </li>-->
     <li class="profile">
       <div class="profile-details">
-        <img
-          [src]="
-            usuario.fotobase64 == ''
-              ? '../../../assets/img/profile.jpg'
-              : usuario.fotobase64
-          "
-          class="rounded-circle"
-          width="40"
-          height="40"
-          alt="profileImg"
-        />
+        <img [src]="usuario.foto == ''? '../../../assets/img/profile.jpg': usuario.foto"class="rounded-circle" width="40" height="40" alt="profileImg" />
         <div class="name_job">
-          <div class="name">
+          <div class="name" (click)="Perfil()">
             {{ usuario.nombre == "" ? "Sesion" : usuario.nombre }}
           </div>
           <div class="job">Usuario</div>
         </div>
       </div>
-      <i class="bx bx-log-out" id="log_out"></i>
+      <i class="bx bx-log-out" id="log_out" (click)="onLogout()"></i>
     </li>
   </ul>
 </div>

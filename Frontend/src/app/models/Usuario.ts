@@ -5,6 +5,14 @@ export interface Usuario {
   correo?: string;
   password?: string;
   passwordconfirmacion?: string;
-  fotobase64?: string;
+  foto?: string;
   extension?: string;
+  archivospublicos?:number;
+}
+
+export interface Amigo {
+  id?: number;
+  correo?: string;
+  idAmigo?: number;
+  correoAmigo?: string;
 }

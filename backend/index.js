@@ -85,7 +85,7 @@ app.post("/login", async (req, res) => {
           res.json({
             /*msg: true,*/
             /* DatosUsuario: {*/
-            codigo: result[0].idUsuario,
+            id: result[0].idUsuario,
             nombre: result[0].nombre,
             correo: result[0].correo,
             foto: result[0].foto,
@@ -98,8 +98,8 @@ app.post("/login", async (req, res) => {
 });
 
 app.post("/signup", async (req, res) => {
-  const { nombre, correo, password, fotobase64, extension } = req.body;
-  let encodedImage = fotobase64;
+  const { nombre, correo, password, foto, extension } = req.body;
+  let encodedImage = foto;
   let decodedImage = Buffer.from(encodedImage, "base64");
   let filename = `${nombre}-${uuid()}.${extension}`;
 
@@ -141,7 +141,12 @@ app.post("/signup", async (req, res) => {
 });
 
 app.get("/listausuarios", async (req, res) => {
-  let consulta = "SELECT idUsuario, nombre, correo, foto FROM Usuario";
+  //var id = parseInt(req.query.id + '');
+  let consulta =
+    "SELECT idUsuario, nombre, correo, foto ,(Select count(idDetalle_Archivo) from Detalle_Archivo where Usuario_idUsuario=" +
+    req.query.id +
+    ") as archivospublicos FROM Usuario where idUsuario!=" +
+    req.query.id;
   conn.query(consulta, [], function (err, result) {
     if (err) throw err;
     res.send(result);
@@ -149,13 +154,13 @@ app.get("/listausuarios", async (req, res) => {
 });
 
 app.post("/agregarAmigo", (req, res) => {
-  const { idLog, correoLog, idAmigo, correoAmigo } = req.body;
-
+  const { id, correo, idAmigo, correoAmigo } = req.body;
+  console.log(req.body);
   let consulta =
     "INSERT INTO Detalle_Amigo (Usuario_idUsuario, Usuario_correo, Usuario_idUsuario1, Usuario_correo1) VALUES (?,?,?,?)";
   conn.query(
     consulta,
-    [idLog, correoLog, idAmigo, correoAmigo],
+    [id, correo, idAmigo, correoAmigo],
     function (err, resul) {
       if (err) throw err;
       res.status(200).json({

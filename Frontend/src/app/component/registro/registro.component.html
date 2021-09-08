@@ -6,9 +6,7 @@
     <form action="index.html">
       <img
         [src]="
-          usuario.fotobase64 == ''
-            ? '../../../assets/img/avatar.svg'
-            : usuario.fotobase64
+          usuario.foto == '' ? '../../../assets/img/avatar.svg' : usuario.foto
         "
         alt=""
       />

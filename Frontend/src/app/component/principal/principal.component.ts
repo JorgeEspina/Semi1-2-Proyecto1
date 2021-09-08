@@ -28,7 +28,7 @@ export class PrincipalComponent implements OnInit {
     nombre: '',
     correo: '',
     password: '',
-    fotobase64: '',
+    foto: '',
     extension: '',
     passwordconfirmacion: '',
   };
@@ -86,6 +86,9 @@ export class PrincipalComponent implements OnInit {
   onLogout(): void {
     this.usuarioService.logoutUser();
     this.router.navigate(['/']);
+  }
+  Perfil():void{
+    this.router.navigate(['/Registro/Actualizar/'+this.usuario.id]);
   }
   Buscar() {
     //console.log(new Date("2012-01-17T13:00:00Z"))

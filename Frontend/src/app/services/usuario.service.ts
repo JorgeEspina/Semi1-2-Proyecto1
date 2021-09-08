@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Usuario } from './../models/usuario';
+import { Usuario,Amigo } from './../models/usuario';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { getUrl } from '../../assets/env';
@@ -13,7 +13,7 @@ export class UsuarioService {
     nombre: '',
     apellido: '',
     correo: '',
-    fotobase64: '',
+    foto: '',
     extension: '',
     password: '',
   };
@@ -54,13 +54,22 @@ export class UsuarioService {
   }
   // registro
   CreateUsuario(usuario1: Usuario): Observable<Usuario> {
-    console.log(getUrl() + 'signup');
-    console.log(usuario1);
+    //console.log(getUrl() + 'signup');
+    //console.log(usuario1);
     return this.http.post(getUrl() + 'signup', usuario1);
   }
   // Modificar un usuario
   UpdateUsuario(usuario1: Usuario): Observable<Usuario> {
     //delete usuario.password;
     return this.http.put(getUrl() + 'update', usuario1);
+  }
+  // obtener dotos los usuarios 
+  getUsuarios(id:number): Observable<any>{
+    return this.http.get(getUrl() + 'listausuarios?id='+id);
+  }
+  
+  // Add amigo en mi lista
+  AddAmigo(amigo: Amigo): Observable<Usuario> {
+    return this.http.post(getUrl() + 'agregarAmigo', amigo);
   }
 }

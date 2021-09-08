@@ -23,6 +23,10 @@ const routes: Routes = [
     component: RegistroComponent,
   },
   {
+    path: 'Registro/Actualizar/:id',
+    component: RegistroComponent,
+  },
+  {
     path: 'Public',
     component: PublicComponent,
   },

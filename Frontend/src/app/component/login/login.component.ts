@@ -14,21 +14,28 @@ export class LoginComponent implements OnInit {
     nombre: '',
     correo: '',
     password: '',
-    fotobase64: '',
+    foto: '',
     extension: '',
   };
-  constructor(
-    private router: Router,
-    private activedRoute: ActivatedRoute,
-    private usuarioService: UsuarioService
-  ) {}
+  constructor(private router: Router,private activedRoute: ActivatedRoute,private usuarioService: UsuarioService) {}
 
-  ngOnInit(): void {}
-
+  ngOnInit(): void {
+    this.getPermiso();
+  }
+  getPermiso() {
+    this.usuario = this.usuarioService.getCurrentUser();
+    console.log(this.usuario);
+    if (this.usuarioService.getCurrentUser() == null) {
+      console.log('no obtuvo mi locationstorage, no hay nadie logueado ');
+    } else {
+      this.router.navigate(['/Principal']);
+    }
+  }
   InicioSesion() {
     this.usuarioService.VerificacionSesion(this.usuario).subscribe(
       (res) => {
         this.usuario = res;
+        //console.log(res)
         console.log(this.usuario);
 
         this.router.navigate(['/Principal']);

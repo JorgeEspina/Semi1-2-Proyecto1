@@ -13,7 +13,7 @@ export class RegistroComponent implements OnInit {
     nombre: '',
     correo: '',
     password: '',
-    fotobase64: '',
+    foto: '',
     extension: '',
     passwordconfirmacion: '',
   };
@@ -22,7 +22,7 @@ export class RegistroComponent implements OnInit {
     nombre: '',
     correo: '',
     password: '',
-    fotobase64: '',
+    foto: '',
     extension: '',
     passwordconfirmacion: '',
   };
@@ -58,22 +58,39 @@ export class RegistroComponent implements OnInit {
       }
     }
   }
-  Registrarse() {
-    this.usuarioService.CreateUsuario(this.usuario).subscribe(
-      (res) => {
-        this.usuario = res;
-        //console.log(this.retorna_usuario[0]);
-        console.log(res);
-        this.router.navigate(['/']);
-      },
-      (err) => {
-        //console.log(err)
-        alert(
-          'Usuario ya existe.! o hubo un error en los datos, vuelva a intentarlo '
-        );
+
+ 
+  Registrarse():void {  
+      if (this.usuario.password !== this.usuario.passwordconfirmacion) {
+        alert('Las contraseñas no coinciden');
+      } else {
+        if (!this.modificar) {
+          this.usuarioService.CreateUsuario(this.usuario).subscribe(
+            (res) => {
+              this.usuario = res;
+              //console.log(this.retorna_usuario[0]);
+              console.log(res);
+              this.router.navigate(['/']);
+            },
+            (err) => {
+              //console.log(err)
+              alert(
+                'Usuario ya existe.! o hubo un error en los datos, vuelva a intentarlo '
+              );
+            }
+          );
+        } else {
+          /*this.servicioUsuarios.updateUsuario(this.usuario).subscribe(data => {
+          this.auxiliar('Se modificado un usuario ')
+          alert('Se ha modificado el usuario existosamente');
+          this.router.navigate(['/Usuarios']);
+        }, error => {
+          alert('Ha existido un error al modificar el usuario');
+        });*/
+        }
       }
-    );
-  }
+    }
+
   private ext: string = '';
   private base64textString: String = '';
 
@@ -98,7 +115,7 @@ export class RegistroComponent implements OnInit {
     //this.usuario =  this.usuarioService.getCurrentUser();
     //console.log('data:image/'+this.ext+';base64,'+btoa(binaryString));
     this.usuario.extension = this.ext;
-    this.usuario.fotobase64 =
+    this.usuario.foto =
       /*
       'data:image/' + this.ext + ';base64,' +*/ btoa(binaryString);
     /*this.usuarioService.GuardarFotoCliente(this.usuario).subscribe(

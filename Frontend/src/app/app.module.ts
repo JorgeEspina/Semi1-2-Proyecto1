@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -10,8 +11,8 @@ import { PrincipalComponent } from './component/principal/principal.component';
 import { RegistroComponent } from './component/registro/registro.component';
 import { NavegacionComponent } from './component/navegacion/navegacion.component';
 
-// Tabla dinamica
-import { MatTableModule } from '@angular/material/table';
+// Tabla dinamica 
+import {MatTableModule} from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -40,6 +41,7 @@ import { AddComponent } from './component/add/add.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    BrowserAnimationsModule,
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
@@ -48,9 +50,9 @@ import { AddComponent } from './component/add/add.component';
     MatFormFieldModule,
     MatInputModule,
     MatSortModule,
-    MatIconModule,
+    MatIconModule
   ],
-  providers: [HttpClientModule],
+  providers: [],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
