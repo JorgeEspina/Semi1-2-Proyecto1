@@ -188,7 +188,7 @@ app.post("/signup", async (req, res) => {
 app.get("/listausuarios", async (req, res) => {
   //var id = parseInt(req.query.id + '');
   let consulta =
-    "SELECT idUsuario, nombre, correo, foto ,(Select count(idDetalle_Archivo) from Detalle_Archivo join Archivo "
+    "SELECT idUsuario, nombre, correo, foto ,(Select count(idDetalle_Archivo) from Detalle_Archivo "
      "where Usuario_idUsuario=" +
     req.query.id +
     ") as archivospublicos FROM Usuario where idUsuario!=" +
