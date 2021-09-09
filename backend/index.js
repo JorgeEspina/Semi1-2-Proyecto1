@@ -29,7 +29,7 @@ const s3 = new AWS.S3(aws_keys.s3);
 
 //--------------------------------------------------ALMACENAMIENTO---------------------------------------
 
-//subir foto en s3
+//subir archivos en s3
 app.post("/subirArchivo", function (req, res) {
   const { nombre, tipo, extension, archivo } = req.body;
 
@@ -43,7 +43,7 @@ app.post("/subirArchivo", function (req, res) {
     tipoContenido = "application/pdf"
   }else if (extension === "txt"){
     tipoContenido = "text/plain";
-  }else{
+  }else if(extension === "png" || extension === "PNG" || extension === "JPG" || extension === "jpg"){
     tipoContenido = "image";
   }
 
@@ -57,8 +57,6 @@ app.post("/subirArchivo", function (req, res) {
     ContentType: tipoContenido,
     ACL: "public-read",
   };
-  /*const putResult = s3.putObject(uploadParamsS3).promise();
-  res.json({ mensaje: putResult });*/
 
   s3.upload(uploadParamsS3, async function (er, data) {
     if (er) {
@@ -70,15 +68,32 @@ app.post("/subirArchivo", function (req, res) {
         [nombre, tipo, data.Location, extension],
         function (err, result) {
           if (err) throw err;
-          res.status(200).json({
-            msg: true,
-          });
+          data ={
+            "path": data.Location
+          }
+          let consulta2 = "select * from Archivo where ?"
+          conn.query(consulta2,[data], async function(e,d){
+            if(e) throw e
+            res.status(200).json({ "idArchivo": d[0].idArchivo })
+          })
         }
       );
     }
   });
 });
 
+app.post('/detalleArchivo', function(req,res){
+  const { idArchivo, idUsuario, correo } = req.body;
+
+  let consulta = 'INSERT INTO Detalle_Archivo (Archivo_idArchivo, Usuario_idUsuario, Usuario_correo) VALUES (?,?,?)'
+
+  conn.query(consulta, [idArchivo,idUsuario,correo], function(err, result){
+    if(err) throw err;
+    res.status(200).json({
+      msg: true
+    });
+  })
+})
 
 //obtener foto en s3
 app.post("/obtenerfoto", function (req, res) {
@@ -173,10 +188,16 @@ app.post("/signup", async (req, res) => {
 app.get("/listausuarios", async (req, res) => {
   //var id = parseInt(req.query.id + '');
   let consulta =
-    "SELECT idUsuario, nombre, correo, foto ,(Select count(idDetalle_Archivo) from Detalle_Archivo where Usuario_idUsuario=" +
+    "SELECT idUsuario, nombre, correo, foto ,(Select count(idDetalle_Archivo) from Detalle_Archivo join Archivo "
+     "where Usuario_idUsuario=" +
     req.query.id +
     ") as archivospublicos FROM Usuario where idUsuario!=" +
     req.query.id;
+  /*let consulta = 'select count(idArchivo) cuenta, us.nombre, us.idUsuario, us.foto, us.correo from Usuario us\
+  join Detalle_Archivo da on da.Usuario_idUsuario = us.idUsuario\
+  join Archivo ar on ar.idArchivo = da.Archivo_idArchivo\
+  where ar.tipo = 0 and us.idUsuario !='+req.query.id+'\
+  group by us.nombre'*/
   conn.query(consulta, [], function (err, result) {
     if (err) throw err;
     res.send(result);
