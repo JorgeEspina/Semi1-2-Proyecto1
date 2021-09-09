@@ -30,25 +30,55 @@ const s3 = new AWS.S3(aws_keys.s3);
 //--------------------------------------------------ALMACENAMIENTO---------------------------------------
 
 //subir foto en s3
-app.post("/subirfoto", function (req, res) {
-  var id = req.body.id;
-  var foto = req.body.foto;
+app.post("/subirArchivo", function (req, res) {
+  const { nombre, tipo, extension, archivo } = req.body;
+
   //carpeta y nombre que quieran darle a la imagen
+  let encodedFile = archivo;
+  let decodedFile = Buffer.from(encodedFile, "base64");
+  let filename = `${nombre}-${uuid()}.${extension}`;
+  let tipoContenido;
+  
+  if(extension === "pdf"){
+    tipoContenido = "application/pdf"
+  }else if (extension === "txt"){
+    tipoContenido = "text/plain";
+  }else{
+    tipoContenido = "image";
+  }
 
-  var nombrei = "archivos/" + id + ".png";
-  //se convierte la base64 a bytes
-  let buff = new Buffer.from(foto, "base64");
-
-  const params = {
-    Bucket: "archivos-2-p1",
-    Key: nombrei,
-    Body: buff,
-    ContentType: "image",
+  let bucketname = "archivos-2-p1";
+  let folder = "archivos/";
+  let filepath = `${folder}${filename}`;
+  var uploadParamsS3 = {
+    Bucket: bucketname,
+    Key: filepath,
+    Body: decodedFile,
+    ContentType: tipoContenido,
     ACL: "public-read",
   };
-  const putResult = s3.putObject(params).promise();
-  res.json({ mensaje: putResult });
+  /*const putResult = s3.putObject(uploadParamsS3).promise();
+  res.json({ mensaje: putResult });*/
+
+  s3.upload(uploadParamsS3, async function (er, data) {
+    if (er) {
+      res.send({ mensaje: "Error al subir archivo" });
+    } else {
+      let consulta = "INSERT INTO Archivo (nombre, tipo, path, extension) VALUES(?,?,?,?)";
+      conn.query(
+        consulta,
+        [nombre, tipo, data.Location, extension],
+        function (err, result) {
+          if (err) throw err;
+          res.status(200).json({
+            msg: true,
+          });
+        }
+      );
+    }
+  });
 });
+
 
 //obtener foto en s3
 app.post("/obtenerfoto", function (req, res) {
