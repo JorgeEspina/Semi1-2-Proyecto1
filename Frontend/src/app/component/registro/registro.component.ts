@@ -27,9 +27,7 @@ export class RegistroComponent implements OnInit {
     passwordconfirmacion: '',
   };
   constructor(
-    private router: Router,
-    private activedRoute: ActivatedRoute,
-    private usuarioService: UsuarioService
+    private router: Router,private activedRoute: ActivatedRoute,private usuarioService: UsuarioService
   ) {}
   modificar: boolean = false;
   isLogged: boolean = false;

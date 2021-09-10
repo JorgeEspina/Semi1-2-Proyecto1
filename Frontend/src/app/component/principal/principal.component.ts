@@ -32,11 +32,7 @@ export class PrincipalComponent implements OnInit {
     extension: '',
     passwordconfirmacion: '',
   };
-  constructor(
-    private router: Router,
-    private activedRoute: ActivatedRoute,
-    private usuarioService: UsuarioService
-  ) {
+  constructor(private router: Router,private activedRoute: ActivatedRoute,private usuarioService: UsuarioService) {
     this.loadScripts();
   }
   isLogged: boolean = false;
@@ -84,8 +80,8 @@ export class PrincipalComponent implements OnInit {
     }
   }
   onLogout(): void {
+    this.router.navigate(['/Login']);
     this.usuarioService.logoutUser();
-    this.router.navigate(['/']);
   }
   Perfil():void{
     this.router.navigate(['/Registro/Actualizar/'+this.usuario.id]);

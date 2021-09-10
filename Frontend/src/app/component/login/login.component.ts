@@ -23,9 +23,11 @@ export class LoginComponent implements OnInit {
     this.getPermiso();
   }
   getPermiso() {
-    this.usuario = this.usuarioService.getCurrentUser();
-    console.log(this.usuario);
-    if (this.usuarioService.getCurrentUser() == null) {
+    let user_string = localStorage.getItem('UsuarioActual');
+    //this.usuario = this.usuarioService.getCurrentUser();
+    //console.log(this.usuario);
+    console.log(user_string);
+    if (user_string == null) {
       console.log('no obtuvo mi locationstorage, no hay nadie logueado ');
     } else {
       this.router.navigate(['/Principal']);

@@ -83,7 +83,7 @@ app.post("/subirArchivo", function (req, res) {
 });
 
 app.post('/detalleArchivo', function(req,res){
-  const { idArchivo, idUsuario, correo } = req.body;
+  const { idArchivo, idUsuario, correo } =  req.body;
 
   let consulta = 'INSERT INTO Detalle_Archivo (Archivo_idArchivo, Usuario_idUsuario, Usuario_correo) VALUES (?,?,?)'
 
@@ -188,11 +188,8 @@ app.post("/signup", async (req, res) => {
 app.get("/listausuarios", async (req, res) => {
   //var id = parseInt(req.query.id + '');
   let consulta =
-    "SELECT idUsuario, nombre, correo, foto ,(Select count(idDetalle_Archivo) from Detalle_Archivo "
-     "where Usuario_idUsuario=" +
-    req.query.id +
-    ") as archivospublicos FROM Usuario where idUsuario!=" +
-    req.query.id;
+  "select idUsuario,nombre,correo,foto,(select count(*) from Detalle_Archivo,Archivo where Detalle_Archivo.Archivo_idArchivo=Archivo.idArchivo and Archivo.tipo = '0' and Detalle_Archivo.Usuario_idUsuario=Usuario.idUsuario) as archivospublicos from Usuario where idUsuario!="+ req.query.id
+   console.log(consulta) 
   /*let consulta = 'select count(idArchivo) cuenta, us.nombre, us.idUsuario, us.foto, us.correo from Usuario us\
   join Detalle_Archivo da on da.Usuario_idUsuario = us.idUsuario\
   join Archivo ar on ar.idArchivo = da.Archivo_idArchivo\
