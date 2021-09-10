@@ -112,6 +112,35 @@ app.post("/obtenerfoto", function (req, res) {
   });
 });
 
+app.get("/listpublic", async (req, res) => {
+  //var id = parseInt(req.query.id + '');
+  let consulta ="select distinct Archivo.nombre,Archivo.extension,Archivo.path from Usuario,Archivo,Detalle_Archivo where Detalle_Archivo.Usuario_idUsuario="+ req.query.id + 
+  " and  Detalle_Archivo.Archivo_idArchivo=Archivo.idArchivo and Archivo.tipo = 0"
+  conn.query(consulta, [], function (err, result) {
+    if (err) throw err;
+    res.send(result);
+  });
+});
+
+app.get("/listprivate", async (req, res) => {
+  //var id = parseInt(req.query.id + '');
+  let consulta ="select distinct Archivo.nombre,Archivo.extension,Archivo.path from Usuario,Archivo,Detalle_Archivo where Detalle_Archivo.Usuario_idUsuario="+ req.query.id + 
+  " and  Detalle_Archivo.Archivo_idArchivo=Archivo.idArchivo and Archivo.tipo = 1"
+  conn.query(consulta, [], function (err, result) {
+    if (err) throw err;
+    res.send(result);
+  });
+});
+
+app.get("/listpublicfriends", async (req, res) => {
+  //var id = parseInt(req.query.id + '');
+  let consulta ="select Archivo.idArchivo,Usuario.nombre as usuario,Archivo.nombre,Archivo.extension,Archivo.path from Usuario,Archivo,Detalle_Archivo,Detalle_Amigo where Detalle_Amigo.Usuario_idUsuario = "+ req.query.id + 
+  " and Detalle_Amigo.Usuario_idUsuario1 = Usuario.idUsuario and Detalle_Archivo.Usuario_idUsuario=Usuario.idUsuario and Detalle_Archivo.Archivo_idArchivo=Archivo.idArchivo and Archivo.tipo = '0'"
+  conn.query(consulta, [], function (err, result) {
+    if (err) throw err;
+    res.send(result);
+  });
+});
 //--------------------------------------------------BASES DE DATOS ---------------------------------------
 app.post("/login", async (req, res) => {
   const { correo, password } = req.body;
@@ -203,7 +232,7 @@ app.get("/listausuarios", async (req, res) => {
 
 app.post("/agregarAmigo", (req, res) => {
   const { id, correo, idAmigo, correoAmigo } = req.body;
-  console.log(req.body);
+  //console.log(req.body);
   let consulta =
     "INSERT INTO Detalle_Amigo (Usuario_idUsuario, Usuario_correo, Usuario_idUsuario1, Usuario_correo1) VALUES (?,?,?,?)";
   conn.query(

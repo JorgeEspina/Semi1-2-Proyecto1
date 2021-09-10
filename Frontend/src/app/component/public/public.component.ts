@@ -3,6 +3,10 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Archivo,DetalleArchivo } from '../../models/Archivo';
+import { ArchivoService } from '../../services/archivo.service';
+import { Usuario } from '../../models/usuario';
+import { UsuarioService } from '../../services/usuario.service';
 
 @Component({
   selector: 'app-public',
@@ -12,26 +16,72 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class PublicComponent implements OnInit {
   ListPublicos: any = [];
   data: any = [];
-  //Codigo tabla
-  displayedColumns: string[] = ['Nombre', 'Fecha', 'Hora', 'Accion'];
-  dataSource: MatTableDataSource<any> = new MatTableDataSource(
-    this.ListPublicos
-  );
+
+  //Codigo tabla public
+  displayedColumns: string[] = ['usuario','nombre', 'extension','Accion'];
+  dataSource: MatTableDataSource<any> = new MatTableDataSource(this.ListPublicos);
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
-  constructor(private router: Router, private activedRoute: ActivatedRoute) {
+
+  usuario: Usuario = {
+    id: 0,
+    nombre: '',
+    correo: '',
+    password: '',
+    foto: '',
+    extension: '',
+    passwordconfirmacion: '',
+  };
+  archivo: Archivo = {
+    idArchivo: 0,
+    nombre: '',
+    tipo: '',
+    path: '',
+    extension: '',
+    archivo:''
+  };
+
+
+  constructor(private router: Router, private activedRoute: ActivatedRoute , private archivoservice: ArchivoService, private usuarioService:UsuarioService) {
     this.loadScripts();
   }
+  isLogged: boolean = false;
 
   ngOnInit(): void {
-    /*this.productosService.getProductosProveedor(this.usuario._id).subscribe(
+    this.getPermiso();
+    this.onCkeckUser();
+    this.archivoservice.getListPublicFriends(this.usuario.id).subscribe(
       res => {
-        //console.log(this.usuario._id)
-        this.productos = res.result;             
-        console.log(this.productos)
+        console.log(this.usuario.id)
+        this.ListPublicos = res;             
+        console.log(this.ListPublicos)
+        this.dataSource.data = this.ListPublicos;
+        setTimeout(() => {
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+        });
       },
       err => console.log(err)
-    )*/
+    )
+  }
+  onCkeckUser(): void {
+    if (this.usuarioService.getCurrentUser() == null) {
+      console.log('no logueado usuario');
+      this.isLogged = false;
+    } else {
+      this.usuario = this.usuarioService.getCurrentUser();
+      console.log('usuario logueado 1');
+      console.log(this.usuario);
+      this.isLogged = true;
+    }
+  }
+  getPermiso() {
+    this.usuario = this.usuarioService.getCurrentUser();
+    console.log(this.usuario);
+    if (this.usuarioService.getCurrentUser() == null) {
+      console.log('no obtuvo mi locationstorage, no hay nadie logueado ');
+    } else {
+    }
   }
   loadScripts() {
     const dynamicScripts = ['../../../assets/js/script.js'];
@@ -44,24 +94,7 @@ export class PublicComponent implements OnInit {
       document.getElementsByTagName('head')[0].appendChild(node);
     }
   }
-  Buscar() {
-    //console.log(new Date("2012-01-17T13:00:00Z"))
-    //console.log(this.listadotransacciones)
-    /*this.TransaccionesService.ListadoTransaccion(this.listadotransacciones).subscribe(
-      res => {
-          //console.log(res );
-          this.ListTransaccion = res;
-          this.auxiliar('Se hizo reporte de Transacciones '+this.listadotransacciones.fecha_inicio+" a "+this.listadotransacciones.fecha_fin);
-          this.dataSource.data = this.ListTransaccion;
-          setTimeout(() => {
-            this.dataSource.paginator = this.paginator;
-            this.dataSource.sort = this.sort;
-          });
-          //console.log(this.ListTransaccion);                 
-       },
-      err => console.log(err)
-    )*/
-  }
+  
 
   applyFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -73,5 +106,9 @@ export class PublicComponent implements OnInit {
   }
   Regresar() {
     this.router.navigate(['/Principal']);
+  }
+  Ver(url:string ):void {
+    console.log(url);
+    window.open(url, "_blank");
   }
 }

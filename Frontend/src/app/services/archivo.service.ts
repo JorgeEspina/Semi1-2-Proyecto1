@@ -19,7 +19,23 @@ export class ArchivoService {
   // Detalle archivo 
  SaveDetalleArchivo(detallearchivo: DetalleArchivo,idarchivo:number): Observable<DetalleArchivo> {
      detallearchivo.Archivo_idArchivo = idarchivo;
-     console.log(detallearchivo)
+     //console.log(detallearchivo)
      return this.http.post(getUrl() + 'detalleArchivo', detallearchivo);
   }
+
+   // obtener archivos publicos 
+   getListPublic(id:number): Observable<any>{
+    return this.http.get(getUrl() + 'listpublic?id='+id);
+  }
+  
+   // obtener archivos privados 
+   getListPrivate(id:number): Observable<any>{
+    return this.http.get(getUrl() + 'listprivate?id='+id);
+  }
+   // obtener archivos publicos de amigos 
+   getListPublicFriends(id:number): Observable<any>{
+    return this.http.get(getUrl() + 'listpublicfriends?id='+id);
+  }
+  
+  
 }

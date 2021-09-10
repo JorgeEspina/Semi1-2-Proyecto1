@@ -1,11 +1,13 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
-import { NgModule } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Usuario } from '../../models/usuario';
 import { UsuarioService } from '../../services/usuario.service';
+import { Archivo,DetalleArchivo } from '../../models/Archivo';
+import { ArchivoService } from '../../services/archivo.service';
+
 @Component({
   selector: 'app-principal',
   templateUrl: './principal.component.html',
@@ -13,17 +15,21 @@ import { UsuarioService } from '../../services/usuario.service';
 })
 export class PrincipalComponent implements OnInit {
   ListPublicos: any = [];
+  ListPrivate: any = [];
   data: any = [];
 
-  //Codigo tabla
-  displayedColumns: string[] = ['Nombre', 'Fecha', 'Hora', 'Accion'];
-  dataSource: MatTableDataSource<any> = new MatTableDataSource(
-    this.ListPublicos
-  );
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
+ //Codigo tabla public
+ displayedColumns: string[] = ['nombre', 'extension','Accion'];
+ dataSource: MatTableDataSource<any> = new MatTableDataSource(this.ListPublicos);
 
-  usuario: Usuario = {
+ //Codigo tabla private
+ displayedColumns1: string[] = ['nombre', 'extension','Accion'];
+ dataSource1: MatTableDataSource<any> = new MatTableDataSource(this.ListPrivate);
+
+ @ViewChild(MatPaginator) paginator: MatPaginator;
+ @ViewChild(MatSort, { static: false }) sort: MatSort;
+ 
+ usuario: Usuario = {
     id: 0,
     nombre: '',
     correo: '',
@@ -32,7 +38,16 @@ export class PrincipalComponent implements OnInit {
     extension: '',
     passwordconfirmacion: '',
   };
-  constructor(private router: Router,private activedRoute: ActivatedRoute,private usuarioService: UsuarioService) {
+  archivo: Archivo = {
+    idArchivo: 0,
+    nombre: '',
+    tipo: '',
+    path: '',
+    extension: '',
+    archivo:''
+  };
+
+  constructor(private router: Router,private activedRoute: ActivatedRoute,private usuarioService: UsuarioService,private archivoservice: ArchivoService) {
     this.loadScripts();
   }
   isLogged: boolean = false;
@@ -47,6 +62,32 @@ export class PrincipalComponent implements OnInit {
     } else {
       console.log('usuario logueado');
       this.isLogged = true;
+      //public
+      this.archivoservice.getListPublic(this.usuario.id).subscribe(
+        res => {
+          this.ListPublicos = res;            
+          console.log(this.ListPublicos)
+          this.dataSource.data = this.ListPublicos;
+          setTimeout(() => {
+            this.dataSource.paginator = this.paginator;
+            this.dataSource.sort = this.sort;
+          });
+        },
+        err => console.log(err)      
+      )
+      //private
+      this.archivoservice.getListPrivate(this.usuario.id).subscribe(
+        res => {
+          this.ListPrivate = res;            
+          console.log(this.ListPrivate)
+          this.dataSource1.data = this.ListPrivate;
+          setTimeout(() => {
+            this.dataSource1.paginator = this.paginator;
+            this.dataSource1.sort = this.sort;
+          });
+        },
+        err => console.log(err)      
+      )
     }
   }
   onCkeckUser(): void {
@@ -86,31 +127,21 @@ export class PrincipalComponent implements OnInit {
   Perfil():void{
     this.router.navigate(['/Registro/Actualizar/'+this.usuario.id]);
   }
-  Buscar() {
-    //console.log(new Date("2012-01-17T13:00:00Z"))
-    //console.log(this.listadotransacciones)
-    /*this.TransaccionesService.ListadoTransaccion(this.listadotransacciones).subscribe(
-      res => {
-          //console.log(res );
-          this.ListTransaccion = res;
-          this.auxiliar('Se hizo reporte de Transacciones '+this.listadotransacciones.fecha_inicio+" a "+this.listadotransacciones.fecha_fin);
-          this.dataSource.data = this.ListTransaccion;
-          setTimeout(() => {
-            this.dataSource.paginator = this.paginator;
-            this.dataSource.sort = this.sort;
-          });
-          //console.log(this.ListTransaccion);                 
-       },
-      err => console.log(err)
-    )*/
-  }
-
+  
   applyFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
 
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
+    }
+  }
+  applyFilter1(event: Event): void {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource1.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource1.paginator) {
+      this.dataSource1.paginator.firstPage();
     }
   }
 
@@ -138,5 +169,9 @@ export class PrincipalComponent implements OnInit {
     this.router
       .navigateByUrl('/', { skipLocationChange: true })
       .then(() => this.router.navigate([uri]));
+  }
+  Ver(url:string ):void {
+    console.log(url);
+    window.open(url, "_blank");
   }
 }
