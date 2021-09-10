@@ -72,9 +72,9 @@ app.post("/subirArchivo", function (req, res) {
             "path": data.Location
           }
           let consulta2 = "select * from Archivo where ?"
-          conn.query(consulta2,[data], async function(e,d){
+           conn.query(consulta2,[data], async function(e,d){
             if(e) throw e
-            res.status(200).json({ "idArchivo": d[0].idArchivo })
+            await res.status(200).json({ "idArchivo": d[0].idArchivo })
           })
         }
       );
@@ -82,12 +82,12 @@ app.post("/subirArchivo", function (req, res) {
   });
 });
 
-app.post('/detalleArchivo', function(req,res){
-  const { idArchivo, idUsuario, correo } =  req.body;
-
+app.post('/detalleArchivo', async function(req,res){
+  const { Archivo_idArchivo, Usuario_idUsuario, Usuario_correo } =  req.body;
+  //console.log(req.body);
   let consulta = 'INSERT INTO Detalle_Archivo (Archivo_idArchivo, Usuario_idUsuario, Usuario_correo) VALUES (?,?,?)'
 
-  conn.query(consulta, [idArchivo,idUsuario,correo], function(err, result){
+  await conn.query(consulta, [Archivo_idArchivo,Usuario_idUsuario,Usuario_correo], function(err, result){
     if(err) throw err;
     res.status(200).json({
       msg: true
@@ -189,7 +189,7 @@ app.get("/listausuarios", async (req, res) => {
   //var id = parseInt(req.query.id + '');
   let consulta =
   "select idUsuario,nombre,correo,foto,(select count(*) from Detalle_Archivo,Archivo where Detalle_Archivo.Archivo_idArchivo=Archivo.idArchivo and Archivo.tipo = '0' and Detalle_Archivo.Usuario_idUsuario=Usuario.idUsuario) as archivospublicos from Usuario where idUsuario!="+ req.query.id
-   console.log(consulta) 
+  // console.log(consulta) 
   /*let consulta = 'select count(idArchivo) cuenta, us.nombre, us.idUsuario, us.foto, us.correo from Usuario us\
   join Detalle_Archivo da on da.Usuario_idUsuario = us.idUsuario\
   join Archivo ar on ar.idArchivo = da.Archivo_idArchivo\

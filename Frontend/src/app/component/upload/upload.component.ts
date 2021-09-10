@@ -100,33 +100,7 @@ export class UploadComponent implements OnInit {
     this.archivo.archivo =
       /*
       'data:image/' + this.ext + ';base64,' +*/ btoa(binaryString);
-    /*this.usuarioService.GuardarFotoCliente(this.usuario).subscribe(
-      res => {
-          console.log(res );
-          console.log('actuaqlizo foto obtiene datos')
-          this.usuarioService.ObtenerDatosUsuario(this.activedRoute.snapshot.params.id).subscribe(
-            res => {       
-              //this.usuario = res;
-
-              this.usuario = res;
-              delete this.usuario.ingresos;
-              delete this.usuario.ventas;
-              this.usuario.tipo = 'cliente'
-              this.usuarioService.setUser(this.usuario);
-              alert("Se actualizo la foto de perfil");
-              //console.log(this.retorna_usuario[0]);
-              console.log(res)
-            },
-            err => {
-              console.log(err)
-            }
-          )
-        },
-      err => {
-        console.log(err)
-        alert("Hubo un error al guardar foto, vuelva a intentarlo");
-      }
-    )*/
+   
   }
   Cargar():void {
     console.log(this.usuario)
@@ -136,15 +110,27 @@ export class UploadComponent implements OnInit {
       this.usuarioService.VerificacionSesion(this.usuario).subscribe(
         (res) => {
           this.usuario = res;
-          console.log(res)
+          //console.log(res)
+          this.detallearchivo.Usuario_correo = this.usuario.correo;
+          this.detallearchivo.Usuario_idUsuario = this.usuario.id;
           this.archivoservice.SubirArchivo(this.archivo).subscribe(
             (res) => {
-              console.log(res);
-              
-              this.detallearchivo.Archivo_idArchivo = res.idArchivo
-              this.detallearchivo.Usuario_correo = this.usuario.correo;
-              this.detallearchivo.Usuario_idUsuario = this.usuario.id;
-              console.log(this.detallearchivo)              
+              this.detallearchivo.Archivo_idArchivo = res.idArchivo;
+              //console.log(this.detallearchivo);
+                           
+              //this.detallearchivo.Archivo_idArchivo = res.idArchivo
+             
+              this.archivoservice.SaveDetalleArchivo(this.detallearchivo,res.idArchivo).subscribe(
+                (res) => {
+                  console.log(res);                  
+                },
+                (err) => {
+                  console.log(err)
+                  alert(
+                    'Hubo un error en guardar relacion del archivo, vuelva a intentarlo '
+                  );
+                }
+              );         
             },
             (err) => {
               console.log(err)
@@ -152,18 +138,7 @@ export class UploadComponent implements OnInit {
                 'Hubo un error en subir el archivo, vuelva a intentarlo '
               );
             }
-          );
-          this.archivoservice.SaveDetalleArchivo(this.detallearchivo).subscribe(
-            (res) => {
-              console.log(res);                  
-            },
-            (err) => {
-              console.log(err)
-              alert(
-                'Hubo un error en guardar relacion del archivo, vuelva a intentarlo '
-              );
-            }
-          );
+          );          
         },
         (err) => {
           //console.log(err)
@@ -171,7 +146,7 @@ export class UploadComponent implements OnInit {
             'Hubo un error en los datos, vuelva a intentarlo '
           );
         }
-      );
+      );     
     }    
   }
   Regresar():void  {
