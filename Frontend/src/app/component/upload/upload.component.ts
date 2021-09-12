@@ -104,7 +104,7 @@ export class UploadComponent implements OnInit {
   }
   Cargar():void {
     console.log(this.usuario)
-    if (this.usuario.password == '' ) {
+    if (this.usuario.password == '' || typeof this.usuario.password =='undefined'  ) {
       alert('Ingrese la contraseña ');
     } else {
       this.usuarioService.VerificacionSesion(this.usuario).subscribe(

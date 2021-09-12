@@ -176,18 +176,25 @@ app.post("/login", async (req, res) => {
   conn.query(consulta, data, function (err, result) {
     if (err) throw err;
     if (result.length > 0) {
+      //console.log(result)
       hash = result[0].password;
       bcrypt.compare(password, hash).then(function (r) {
         if (r) {
           res.json({
-            /*msg: true,*/
-            /* DatosUsuario: {*/
+            /*msg: true,
+             DatosUsuario: {*/
             id: result[0].idUsuario,
             nombre: result[0].nombre,
             correo: result[0].correo,
             foto: result[0].foto,
             /*},*/
           });
+        }else{
+          res.set('Content-Type', 'application/json');
+                    res.status(500).send(JSON.stringify({
+                        status: 500,
+                        msg: "Error getting the user profile",
+                    }));
         }
       });
     }
@@ -279,7 +286,7 @@ app.post('/eliminarDetArchivo', async (req, res) => {
     res.status(200).json({
       "idArchivo":idArchivo
     })
-
+ 
   })
 
 })

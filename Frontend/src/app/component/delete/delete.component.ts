@@ -14,15 +14,15 @@ import { UsuarioService } from '../../services/usuario.service';
   styleUrls: ['./delete.component.css'],
 })
 export class DeleteComponent implements OnInit {
-  ListPublicos: any = [];
+  List: any = [];
   data: any = [];
   // para selecion de tipo
   TipoSeleccionado: string = null;
   verSeleccionTipo: string = null;
   //Codigo tabla
-  displayedColumns: string[] = ['Nombre', 'Fecha', 'Hora', 'Accion'];
+  displayedColumns: string[] = ['nombre', 'extension', 'tipo', 'Accion'];
   dataSource: MatTableDataSource<any> = new MatTableDataSource(
-    this.ListPublicos
+    this.List
   );
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
@@ -50,14 +50,6 @@ export class DeleteComponent implements OnInit {
     archivo:''
   };
   ngOnInit(): void {
-    /*this.productosService.getProductosProveedor(this.usuario._id).subscribe(
-      res => {
-        //console.log(this.usuario._id)
-        this.productos = res.result;             
-        console.log(this.productos)
-      },
-      err => console.log(err)
-    )*/
     this.getPermiso();
     this.onCkeckUser();
     //console.log(this.authService.getCurrentUser());
@@ -68,11 +60,11 @@ export class DeleteComponent implements OnInit {
       console.log('usuario logueado');
       this.isLogged = true;
       //public
-      this.archivoservice.getListPublic(this.usuario.id).subscribe(
+      this.archivoservice.getListArchivo(this.usuario.id).subscribe(
         res => {
-          this.ListPublicos = res;            
-          console.log(this.ListPublicos)
-          this.dataSource.data = this.ListPublicos;
+          this.List = res;            
+          console.log(this.List)
+          this.dataSource.data = this.List;
           setTimeout(() => {
             this.dataSource.paginator = this.paginator;
             this.dataSource.sort = this.sort;
@@ -93,24 +85,7 @@ export class DeleteComponent implements OnInit {
       document.getElementsByTagName('head')[0].appendChild(node);
     }
   }
-  Buscar() {
-    //console.log(new Date("2012-01-17T13:00:00Z"))
-    //console.log(this.listadotransacciones)
-    /*this.TransaccionesService.ListadoTransaccion(this.listadotransacciones).subscribe(
-      res => {
-          //console.log(res );
-          this.ListTransaccion = res;
-          this.auxiliar('Se hizo reporte de Transacciones '+this.listadotransacciones.fecha_inicio+" a "+this.listadotransacciones.fecha_fin);
-          this.dataSource.data = this.ListTransaccion;
-          setTimeout(() => {
-            this.dataSource.paginator = this.paginator;
-            this.dataSource.sort = this.sort;
-          });
-          //console.log(this.ListTransaccion);                 
-       },
-      err => console.log(err)
-    )*/
-  }
+ 
   onCkeckUser(): void {
     if (this.usuarioService.getCurrentUser() == null) {
       console.log('no logueado usuario');
@@ -124,7 +99,7 @@ export class DeleteComponent implements OnInit {
   }
   getPermiso() {
     this.usuario = this.usuarioService.getCurrentUser();
-    console.log(this.usuario);
+    //console.log(this.usuario);
     if (this.usuarioService.getCurrentUser() == null) {
       console.log('no obtuvo mi locationstorage, no hay nadie logueado ');
     } else {
@@ -182,10 +157,11 @@ export class DeleteComponent implements OnInit {
     }
   }
   Delete() {
-    if (this.usuario.password == '' ) {
+    console.log(this.usuario.password);
+    if (this.usuario.password == '' || typeof this.usuario.password =='undefined' ) {
       alert('Ingrese la contraseña ');
     } else {
-      console.log(this.usuario);
+      //console.log(this.usuario);
       this.usuarioService.VerificacionSesion(this.usuario).subscribe(
         (res) => {
           //this.usuario = res;
@@ -195,29 +171,35 @@ export class DeleteComponent implements OnInit {
               console.log(res);
               this.archivoservice.DeleteArchivo(this.archivo).subscribe(
                 (res) =>{
-                  console.log("Se elimino todo");
+                  console.log(res + " Se elimino todo");
+                },
+                (err) => {
+                  console.log(err)
+                  alert(
+                    'Hubo un error en eliminar el archivo, vuelva a intentarlo '
+                  );
                 }
               )
-              /*this.archivoservice.getListArchivo(this.usuario.id).subscribe(
+              this.archivoservice.getListArchivo(this.usuario.id).subscribe(
                 res => {
-                  this.ListPublicos = res;             
-                  console.log(this.ListPublicos)
-                  this.dataSource.data = this.ListPublicos;
+                  this.List = res;             
+                  console.log(this.List)
+                  this.dataSource.data = this.List;
                   setTimeout(() => {
                     this.dataSource.paginator = this.paginator;
                     this.dataSource.sort = this.sort;
                   });
                 },
                 err => console.log(err)
-              )*/
+              )
             },
             (err) => {
               console.log(err)
               alert(
-                'Hubo un error en modificar el archivo, vuelva a intentarlo '
+                'Hubo un error en eliminar el detalle archivo, vuelva a intentarlo '
               );
             }
-          );          
+          );       
         },
         (err) => {
           console.log(err)
@@ -240,5 +222,6 @@ export class DeleteComponent implements OnInit {
     this.archivo.idArchivo = id;
     this.archivo.nombre = nombre;
     this.archivo.tipo = tipo;
+    this.Delete();
   }
 }

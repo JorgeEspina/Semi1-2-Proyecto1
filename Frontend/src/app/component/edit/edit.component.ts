@@ -145,7 +145,7 @@ export class EditComponent implements OnInit {
     }
   }
   Update() {
-    if (this.usuario.password == '' ) {
+    if (this.usuario.password == '' || typeof this.usuario.password =='undefined' ) {
       alert('Ingrese la contraseña ');
     } else {
       console.log(this.usuario);

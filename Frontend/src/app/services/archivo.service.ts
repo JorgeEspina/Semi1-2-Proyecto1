@@ -46,10 +46,10 @@ export class ArchivoService {
 }
 
 DeteleDetalleArchivo(archivo: Archivo): Observable<Archivo> {
-  return this.http.post(getUrl() + 'detalleArchivo', archivo);
+  return this.http.post(getUrl() + 'eliminarDetArchivo', archivo);
 }
 
 DeleteArchivo(archivo: Archivo): Observable<Archivo> {
-  return this.http.post(getUrl() + 'detalleArchivo', archivo);
+  return this.http.post(getUrl() + 'eliminarArchivo', archivo);
 }
 }
