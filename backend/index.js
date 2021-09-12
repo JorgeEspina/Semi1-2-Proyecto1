@@ -38,12 +38,12 @@ app.post("/subirArchivo", function (req, res) {
   let decodedFile = Buffer.from(encodedFile, "base64");
   let filename = `${nombre}-${uuid()}.${extension}`;
   let tipoContenido;
-  
-  if(extension === "pdf"){
+
+  if (extension === "pdf") {
     tipoContenido = "application/pdf"
-  }else if (extension === "txt"){
+  } else if (extension === "txt") {
     tipoContenido = "text/plain";
-  }else if(extension === "png" || extension === "PNG" || extension === "JPG" || extension === "jpg"){
+  } else if (extension === "png" || extension === "PNG" || extension === "JPG" || extension === "jpg") {
     tipoContenido = "image";
   }
 
@@ -68,12 +68,12 @@ app.post("/subirArchivo", function (req, res) {
         [nombre, tipo, data.Location, extension],
         function (err, result) {
           if (err) throw err;
-          data ={
+          data = {
             "path": data.Location
           }
           let consulta2 = "select * from Archivo where ?"
-           conn.query(consulta2,[data], async function(e,d){
-            if(e) throw e
+          conn.query(consulta2, [data], async function (e, d) {
+            if (e) throw e
             await res.status(200).json({ "idArchivo": d[0].idArchivo })
           })
         }
@@ -82,26 +82,26 @@ app.post("/subirArchivo", function (req, res) {
   });
 });
 
-app.post('/detalleArchivo', async function(req,res){
-  const { Archivo_idArchivo, Usuario_idUsuario, Usuario_correo } =  req.body;
+app.post('/detalleArchivo', async function (req, res) {
+  const { Archivo_idArchivo, Usuario_idUsuario, Usuario_correo } = req.body;
   //console.log(req.body);
   let consulta = 'INSERT INTO Detalle_Archivo (Archivo_idArchivo, Usuario_idUsuario, Usuario_correo) VALUES (?,?,?)'
 
-  await conn.query(consulta, [Archivo_idArchivo,Usuario_idUsuario,Usuario_correo], function(err, result){
-    if(err) throw err;
+  await conn.query(consulta, [Archivo_idArchivo, Usuario_idUsuario, Usuario_correo], function (err, result) {
+    if (err) throw err;
     res.status(200).json({
       msg: true
     });
   })
 })
 
-app.put('/UpdateArchivo', async function(req,res){
-  const { nombre, tipo } =  req.body;
+app.put('/UpdateArchivo', async function (req, res) {
+  const { nombre, tipo } = req.body;
   //console.log(req.body);
-  let consulta = 'UPDATE Archivo SET nombre=?,tipo=? WHERE idArchivo ='+req.body.idArchivo
+  let consulta = 'UPDATE Archivo SET nombre=?,tipo=? WHERE idArchivo =' + req.body.idArchivo
 
-  await conn.query(consulta, [nombre,tipo], function(err, result){
-    if(err) throw err;
+  await conn.query(consulta, [nombre, tipo], function (err, result) {
+    if (err) throw err;
     res.status(200).json({
       msg: true
     });
@@ -127,8 +127,8 @@ app.post("/obtenerfoto", function (req, res) {
 
 app.get("/listpublic", async (req, res) => {
   //var id = parseInt(req.query.id + '');
-  let consulta ="select distinct Archivo.nombre,Archivo.extension,Archivo.path from Usuario,Archivo,Detalle_Archivo where Detalle_Archivo.Usuario_idUsuario="+ req.query.id + 
-  " and  Detalle_Archivo.Archivo_idArchivo=Archivo.idArchivo and Archivo.tipo = 0"
+  let consulta = "select distinct Archivo.nombre,Archivo.extension,Archivo.path from Usuario,Archivo,Detalle_Archivo where Detalle_Archivo.Usuario_idUsuario=" + req.query.id +
+    " and  Detalle_Archivo.Archivo_idArchivo=Archivo.idArchivo and Archivo.tipo = 0"
   conn.query(consulta, [], function (err, result) {
     if (err) throw err;
     res.send(result);
@@ -137,8 +137,8 @@ app.get("/listpublic", async (req, res) => {
 
 app.get("/listprivate", async (req, res) => {
   //var id = parseInt(req.query.id + '');
-  let consulta ="select distinct Archivo.nombre,Archivo.extension,Archivo.path from Usuario,Archivo,Detalle_Archivo where Detalle_Archivo.Usuario_idUsuario="+ req.query.id + 
-  " and  Detalle_Archivo.Archivo_idArchivo=Archivo.idArchivo and Archivo.tipo = 1"
+  let consulta = "select distinct Archivo.nombre,Archivo.extension,Archivo.path from Usuario,Archivo,Detalle_Archivo where Detalle_Archivo.Usuario_idUsuario=" + req.query.id +
+    " and  Detalle_Archivo.Archivo_idArchivo=Archivo.idArchivo and Archivo.tipo = 1"
   conn.query(consulta, [], function (err, result) {
     if (err) throw err;
     res.send(result);
@@ -147,8 +147,8 @@ app.get("/listprivate", async (req, res) => {
 
 app.get("/list", async (req, res) => {
   //var id = parseInt(req.query.id + '');
-  let consulta ="select distinct Archivo.idArchivo,Archivo.nombre,Archivo.extension,Archivo.path,Archivo.tipo from Usuario,Archivo,Detalle_Archivo where Detalle_Archivo.Usuario_idUsuario="+ req.query.id + 
-  " and  Detalle_Archivo.Archivo_idArchivo=Archivo.idArchivo"
+  let consulta = "select distinct Archivo.idArchivo,Archivo.nombre,Archivo.extension,Archivo.path,Archivo.tipo from Usuario,Archivo,Detalle_Archivo where Detalle_Archivo.Usuario_idUsuario=" + req.query.id +
+    " and  Detalle_Archivo.Archivo_idArchivo=Archivo.idArchivo"
   conn.query(consulta, [], function (err, result) {
     if (err) throw err;
     res.send(result);
@@ -157,8 +157,8 @@ app.get("/list", async (req, res) => {
 
 app.get("/listpublicfriends", async (req, res) => {
   //var id = parseInt(req.query.id + '');
-  let consulta ="select Archivo.idArchivo,Usuario.nombre as usuario,Archivo.nombre,Archivo.extension,Archivo.path from Usuario,Archivo,Detalle_Archivo,Detalle_Amigo where Detalle_Amigo.Usuario_idUsuario = "+ req.query.id + 
-  " and Detalle_Amigo.Usuario_idUsuario1 = Usuario.idUsuario and Detalle_Archivo.Usuario_idUsuario=Usuario.idUsuario and Detalle_Archivo.Archivo_idArchivo=Archivo.idArchivo and Archivo.tipo = '0'"
+  let consulta = "select Archivo.idArchivo,Usuario.nombre as usuario,Archivo.nombre,Archivo.extension,Archivo.path from Usuario,Archivo,Detalle_Archivo,Detalle_Amigo where Detalle_Amigo.Usuario_idUsuario = " + req.query.id +
+    " and Detalle_Amigo.Usuario_idUsuario1 = Usuario.idUsuario and Detalle_Archivo.Usuario_idUsuario=Usuario.idUsuario and Detalle_Archivo.Archivo_idArchivo=Archivo.idArchivo and Archivo.tipo = '0'"
   conn.query(consulta, [], function (err, result) {
     if (err) throw err;
     res.send(result);
@@ -240,7 +240,7 @@ app.post("/signup", async (req, res) => {
 app.get("/listausuarios", async (req, res) => {
   //var id = parseInt(req.query.id + '');
   let consulta =
-  "select idUsuario,nombre,correo,foto,(select count(*) from Detalle_Archivo,Archivo where Detalle_Archivo.Archivo_idArchivo=Archivo.idArchivo and Archivo.tipo = '0' and Detalle_Archivo.Usuario_idUsuario=Usuario.idUsuario) as archivospublicos from Usuario where idUsuario!="+ req.query.id
+    "select idUsuario,nombre,correo,foto,(select count(*) from Detalle_Archivo,Archivo where Detalle_Archivo.Archivo_idArchivo=Archivo.idArchivo and Archivo.tipo = '0' and Detalle_Archivo.Usuario_idUsuario=Usuario.idUsuario) as archivospublicos from Usuario where idUsuario!=" + req.query.id
   // console.log(consulta) 
   /*let consulta = 'select count(idArchivo) cuenta, us.nombre, us.idUsuario, us.foto, us.correo from Usuario us\
   join Detalle_Archivo da on da.Usuario_idUsuario = us.idUsuario\
@@ -269,3 +269,31 @@ app.post("/agregarAmigo", (req, res) => {
     }
   );
 });
+
+app.post('/eliminarDetArchivo', async (req, res) => {
+  const { idArchivo } = req.body;
+  let consulta = 'delete from Detalle_Archivo where Archivo_idArchivo = ?';
+
+  await conn.query(consulta,[idArchivo],(err,result)=>{
+    if(err) throw err;
+    res.status(200).json({
+      "idArchivo":idArchivo
+    })
+
+  })
+
+})
+
+app.post('/eliminarArchivo', async (req, res) => {
+  const { idArchivo } = req.body;
+  let consulta = 'delete from Archivo where idArchivo = ?';
+
+  await conn.query(consulta,[idArchivo],(err,result)=>{
+    if(err) throw err;
+    res.status(200).json({
+      "idArchivo":idArchivo
+    })
+
+  })
+
+})

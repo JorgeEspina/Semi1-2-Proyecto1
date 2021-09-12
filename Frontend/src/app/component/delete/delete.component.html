@@ -23,25 +23,25 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
               Nombre Archivo
             </th>
-            <!--<td mat-cell *matCellDef="let row"> {{row.id_transaccion}} </td>-->
+            <<td mat-cell *matCellDef="let row"> {{row.nombre}} </td>>
           </ng-container>
 
           <!-- Fecha Column -->
           <ng-container matColumnDef="Fecha">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Fecha</th>
-            <!--<td mat-cell *matCellDef="let row"> {{row.Fecha | date}} </td>-->
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Extensión</th>
+            <<td mat-cell *matCellDef="let row"> {{row.extension}} </td>>
           </ng-container>
 
           <!-- Hora Column -->
           <ng-container matColumnDef="Hora">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Hora</th>
-            <!--<td mat-cell *matCellDef="let row"> {{row.Hora}} </td>-->
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Tipo</th>
+            <<td mat-cell *matCellDef="let row"> {{row.tipo==0?'Publico':'Privado'}} </td>>
           </ng-container>
 
           <!-- Accion Column -->
           <ng-container matColumnDef="Accion">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Accion</th>
-            <!--<td mat-cell *matCellDef="let row"> {{row.telefono_cliente}} </td>-->
+            <td mat-cell *matCellDef="let row"> <button type="button" class="btn" (click)="Ver(row.idArchivo,row.nombre,row.tipo)" ><i class="far fa-eye"></i></button></td>
           </ng-container>
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>

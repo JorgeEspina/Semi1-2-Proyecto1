@@ -44,4 +44,12 @@ export class ArchivoService {
  getListArchivo(id:number): Observable<Archivo> {
   return this.http.get(getUrl() + 'list?id='+id);
 }
+
+DeteleDetalleArchivo(archivo: Archivo): Observable<Archivo> {
+  return this.http.post(getUrl() + 'detalleArchivo', archivo);
+}
+
+DeleteArchivo(archivo: Archivo): Observable<Archivo> {
+  return this.http.post(getUrl() + 'detalleArchivo', archivo);
+}
 }
