@@ -36,6 +36,12 @@ export class ArchivoService {
    getListPublicFriends(id:number): Observable<any>{
     return this.http.get(getUrl() + 'listpublicfriends?id='+id);
   }
-  
-  
+  //actualizar archivo
+  updateArchivo(archivo: Archivo): Observable<Archivo> {
+    return this.http.put(getUrl() + 'UpdateArchivo',archivo);
+ }
+ //get list archivo
+ getListArchivo(id:number): Observable<Archivo> {
+  return this.http.get(getUrl() + 'list?id='+id);
+}
 }

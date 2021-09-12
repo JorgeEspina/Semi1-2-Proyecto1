@@ -95,6 +95,19 @@ app.post('/detalleArchivo', async function(req,res){
   })
 })
 
+app.put('/UpdateArchivo', async function(req,res){
+  const { nombre, tipo } =  req.body;
+  //console.log(req.body);
+  let consulta = 'UPDATE Archivo SET nombre=?,tipo=? WHERE idArchivo ='+req.body.idArchivo
+
+  await conn.query(consulta, [nombre,tipo], function(err, result){
+    if(err) throw err;
+    res.status(200).json({
+      msg: true
+    });
+  })
+})
+
 //obtener foto en s3
 app.post("/obtenerfoto", function (req, res) {
   var id = req.body.id;
@@ -132,6 +145,16 @@ app.get("/listprivate", async (req, res) => {
   });
 });
 
+app.get("/list", async (req, res) => {
+  //var id = parseInt(req.query.id + '');
+  let consulta ="select distinct Archivo.idArchivo,Archivo.nombre,Archivo.extension,Archivo.path,Archivo.tipo from Usuario,Archivo,Detalle_Archivo where Detalle_Archivo.Usuario_idUsuario="+ req.query.id + 
+  " and  Detalle_Archivo.Archivo_idArchivo=Archivo.idArchivo"
+  conn.query(consulta, [], function (err, result) {
+    if (err) throw err;
+    res.send(result);
+  });
+});
+
 app.get("/listpublicfriends", async (req, res) => {
   //var id = parseInt(req.query.id + '');
   let consulta ="select Archivo.idArchivo,Usuario.nombre as usuario,Archivo.nombre,Archivo.extension,Archivo.path from Usuario,Archivo,Detalle_Archivo,Detalle_Amigo where Detalle_Amigo.Usuario_idUsuario = "+ req.query.id + 
@@ -145,7 +168,7 @@ app.get("/listpublicfriends", async (req, res) => {
 app.post("/login", async (req, res) => {
   const { correo, password } = req.body;
   consulta = "select * from Usuario where ? ";
-
+  //console.log(req.body)
   var data = {
     correo: correo,
   };
