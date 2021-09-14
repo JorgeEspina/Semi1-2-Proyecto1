@@ -134,6 +134,18 @@ app.get("/listpublic", async (req, res) => {
     res.send(result);
   });
 });
+app.get("/raiz", async (req, res) => {
+  //var id = parseInt(req.query.id + '');
+  let consulta = "select * from Usuario"
+  conn.query(consulta, [], function (err, result) {
+    if (err) throw err;
+    res.set('Content-Type', 'application/json');
+    res.status(200).send(JSON.stringify({
+        status: 200,
+        msg: "todo bien",
+    }));
+  });
+});
 
 app.get("/listprivate", async (req, res) => {
   //var id = parseInt(req.query.id + '');
