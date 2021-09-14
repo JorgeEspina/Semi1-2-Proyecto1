@@ -12,7 +12,7 @@
 
 ## Objetivos
 
-## Requerimientos del Computador
+## Arquitectura
 
-![Requerimientos](img/requerimientos.png "Requerimientos")
+![Arquitectura](img/arquitectura.PNG "Arquitectura")
 

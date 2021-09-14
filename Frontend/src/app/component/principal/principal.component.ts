@@ -163,7 +163,7 @@ export class PrincipalComponent implements OnInit {
 
   Principal() {
     this.redirectTo('');
-    window.location.reload();
+    //window.location.reload();
   }
   redirectTo(uri: string) {
     this.router
