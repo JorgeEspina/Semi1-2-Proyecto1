@@ -33,7 +33,7 @@
   2. Luego se ingresa si deseamos tener nuestro bucket privado o público, para nuestro caso será publico por lo que desmarcaremos "Block all public access"
   ![Arquitectura](ImgAWS/BucketAccesibilidad.JPG "Accesibilidad bucket") 
   3. Al ingresar los datos anteriores veremos una opción la cuál nos permite tener versionamientos de bucket, para nuestro caso la dejaremos "Disabled", también podremos      agregar Tags para finalizar presionamos el botón "Crear Bucket"
-  ![Arquitectura](ImgAWS/BucketVersioningTag.JPG "Versionamiento bucket") 
+  ![Arquitectura](ImgAWS/BucketVersioningTags.JPG "Versionamiento bucket") 
   4. Al final podremos ver el Bucket creado.
   ![Arquitectura](ImgAWS/BucketCreado.JPG "Creado bucket") 
   ### Creación de RDS (Base de datos)
