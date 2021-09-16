@@ -8,7 +8,7 @@
   - [Arquitectura](#arquitectura)
   - [Usuarios IAM](#usuarios-iam)
   - [Pasos](#pasos)
-  - [Conclusiones](#conclusion)
+  - [Conclusiones](#conclusiones)
 
 
 ## Objetivos
