@@ -8,7 +8,7 @@
   - [Arquitectura](#arquitectura)
   - [Usuarios IAM](#usuarios-iam)
   - [Pasos](#pasos)
-  - [Conclusion](#conclusion)
+  - [Conclusiones](#conclusion)
 
 
 ## Objetivos
@@ -26,7 +26,7 @@ rápida, segura y fácil.
 
 ![Arquitectura](img/arquitectura.PNG "Arquitectura")
 
-## Usuario IAM
+## Usuarios IAM
   
   ### Usuarios Administrador
   Administrador_201403632
