@@ -270,11 +270,40 @@ rápida, segura y fácil.
   ![Arquitectura](ImgAWS/InstanciasCreadas.JPG "Search EC2")
   
   ### Balanceador de Carga
-    ![Balanceador](img/1.PNG "Balanceador")
+  Nos vamos a EC2 despues al apartado balanceador de carga le damos crear balanceador de carga.
 
+  ![Balanceador](img/1.PNG  "Balanceador")
 
+Buscamos el de generacion anterior o baleanceador de carga clasico
 
-  
+  ![Balanceador](img/2.PNG  "Balanceador")
+
+Aqui nos aparece asignamos un nombre al balanceador de carga y selecionamos la vpc que ya tenemos creada
+
+  ![Balanceador](img/3.PNG  "Balanceador")
+
+En puerto de instancia tenemos que poner el puerto de el backend el cual se va a conectar.
+Asi como selecionamos la sub red publica, le damos siguiente.
+
+  ![Balanceador](img/4.PNG  "Balanceador")
+
+Aqui procedemos a asignarle el segurity group anteriormente creado.
+
+  ![Balanceador](img/5.PNG  "Balanceador")
+
+Aqui procedemos a cambiar la ruta de ping a una ruta en la cual el balanceador pueda hacer una consulta en este caso es una ruta que se llama raiz que en el backend se encuentra que verifica si hay comunicacion entre ellos, le damos siguiente.
+
+   ![Balanceador](img/6.PNG  "Balanceador")
+ 
+Procedemos a agregar las dos instancias que seran nuestros 2 backend.
+siguiente y se creara el balanceador de carga si todo esta bien configurado.
+
+   ![Balanceador](img/7.PNG  "Balanceador")
+
+aqui ya nos muestra que el balanceador esta funcionando y esta creado.
+
+  ![Balanceador](img/8.PNG  "Balanceador")
+
   ## Conclusiones
   
   - Se aplicaron los conocimientos que se adquirieron tanto en laboratorio como el clase.
