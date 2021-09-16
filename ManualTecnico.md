@@ -67,7 +67,7 @@ rápida, segura y fácil.
   
   1. Vamos a buscar RDS luego escogemos la primero opción que indica.
 
-  ![Arquitectura](ImgAWS/SearchPds.JPG "Search RDS")
+  ![Arquitectura](ImgAWS/SearchRds.JPG "Search RDS")
   
   2. Antes de crear una base de datos, se creara una Subnet Groups.
   
@@ -81,11 +81,11 @@ rápida, segura y fácil.
 
   ![Arquitectura](ImgAWS/NombreVpcSubnetGroup.JPG "Vpc Subnet Groups")
   
-  ![Arquitectura](ImgAWS/AgregarsubnetGroup.JPG "Agregar Subnet Group")
+  ![Arquitectura](ImgAWS/AgregarSubnetGroup.JPG "Agregar Subnet Group")
   
   5. Por último podremos ver las Subnet creadas.
 
-  ![Arquitectura](ImgAWS/SubnetGroupCread.JPG "Subnet Groups Creada")
+  ![Arquitectura](ImgAWS/SubnetGroupCreada.JPG "Subnet Groups Creada")
   
   6. Luego de creada la Subnet Group, crearemos la base de datos para ellos nos dirigiremos a "Databases" tal y como se muestra en la siguiente imagen.
 
@@ -134,4 +134,5 @@ rápida, segura y fácil.
   ![Arquitectura](ImgAWS/DatabaseCreada.JPG "Creada database")
   
   ### Creación de VPC
+  
   ![Arquitectura](ImgAWS/SubnetGroupCreada.JPG "Arquitectura")
