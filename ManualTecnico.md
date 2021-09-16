@@ -69,11 +69,11 @@ rápida, segura y fácil.
   
   1. Vamos a buscar VPC luego escogemos la primero opción que indica.
 
-  ![Arquitectura](ImgAWS/SearchVPC.JPG "Search Vpc")
+  ![Arquitectura](ImgAWS/SearchVpc.JPG "Search Vpc")
   
   2. Luego de escoger el servicio VPC, vamos a escoger Your VPCs tal y como se muestra en la siguiente imagen.
 
-  ![Arquitectura](ImgAWS/DashboardVpv.JPG "Dashboard VPC")
+  ![Arquitectura](ImgAWS/DashboardVpc.JPG "Dashboard VPC")
   
   3. Luego vamos a la opción de crear VPC y nos mostrara una pantalla para poder ingresar datos de la VPC nueva
   
