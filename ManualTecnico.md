@@ -239,7 +239,7 @@ rápida, segura y fácil.
   
   4. Nos mostrara una pantalla para escoger una de las imagenes que nos ofrece AWS
 
-  ![Arquitectura](ImgAWS/EscogerImagenE2.JPG "Search EC2")
+  ![Arquitectura](ImgAWS/EscogerImagenEC2.JPG "Search EC2")
   
   5. Luego escogeremos el tipo de instancia, en nuestro caso será la versión gratiuta
 
@@ -259,7 +259,7 @@ rápida, segura y fácil.
   
   9. Luego escogeremos los security groups que tendremos ya sea que tengamos creados o podemos crear uno nuevo.
 
-  ![Arquitectura](ImgAWS/SecurtityGroupsEc2.JPG "Search EC2")
+  ![Arquitectura](ImgAWS/SecurityGroupsEc2.JPG "Search EC2")
   
   10. Por último tendremos un resumen de lo que hemos configurado en nuestra instancia y si todo estar correcto presionamos el botón "Launch"
 
@@ -269,6 +269,11 @@ rápida, segura y fácil.
 
   ![Arquitectura](ImgAWS/InstanciasCreadas.JPG "Search EC2")
   
+  ### Balanceador de Carga
+    ![Balanceador](img/1.PNG "Balanceador")
+
+
+
   
   ## Conclusiones
   
