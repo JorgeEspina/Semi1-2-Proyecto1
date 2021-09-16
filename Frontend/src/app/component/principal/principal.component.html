@@ -163,6 +163,7 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Accion</th>
             <td mat-cell *matCellDef="let row"> <button type="button" class="btn" (click)="Ver(row.path)" ><i class="far fa-eye"></i></button></td>
           </ng-container>
+          
           <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns1"></tr>
 

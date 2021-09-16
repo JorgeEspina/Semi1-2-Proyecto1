@@ -72,7 +72,7 @@ export class AddComponent implements OnInit {
   }
   getPermiso() {
     this.usuario = this.usuarioService.getCurrentUser();
-    console.log(this.usuario);
+    //console.log(this.usuario);
     if (this.usuarioService.getCurrentUser() == null) {
       console.log('no obtuvo mi locationstorage, no hay nadie logueado ');
     } else {
@@ -102,6 +102,9 @@ export class AddComponent implements OnInit {
           //this.usuario = res;
           //console.log(this.retorna_usuario[0]);
           console.log(res);
+          alert(
+            'Se agrego exitosamente de amigo'
+          );
           //this.router.navigate(['/']);
         },
         (err) => {

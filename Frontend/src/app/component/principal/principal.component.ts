@@ -16,7 +16,7 @@ import { ArchivoService } from '../../services/archivo.service';
 export class PrincipalComponent implements OnInit {
   ListPublicos: any = [];
   ListPrivate: any = [];
-  data: any = [];
+  //data: any = [];
 
  //Codigo tabla public
  displayedColumns: string[] = ['nombre', 'extension','Accion'];
@@ -28,6 +28,9 @@ export class PrincipalComponent implements OnInit {
 
  @ViewChild(MatPaginator) paginator: MatPaginator;
  @ViewChild(MatSort, { static: false }) sort: MatSort;
+
+ @ViewChild(MatPaginator) paginator1: MatPaginator;
+ @ViewChild(MatSort, { static: false }) sort1: MatSort;
  
  usuario: Usuario = {
     id: 0,
@@ -82,8 +85,8 @@ export class PrincipalComponent implements OnInit {
           console.log(this.ListPrivate)
           this.dataSource1.data = this.ListPrivate;
           setTimeout(() => {
-            this.dataSource1.paginator = this.paginator;
-            this.dataSource1.sort = this.sort;
+            this.dataSource1.paginator = this.paginator1;
+            this.dataSource1.sort = this.sort1;
           });
         },
         err => console.log(err)      
@@ -97,13 +100,13 @@ export class PrincipalComponent implements OnInit {
     } else {
       this.usuario = this.usuarioService.getCurrentUser();
       console.log('usuario logueado 1');
-      console.log(this.usuario);
+      //console.log(this.usuario);
       this.isLogged = true;
     }
   }
   getPermiso() {
     this.usuario = this.usuarioService.getCurrentUser();
-    console.log(this.usuario);
+    //console.log(this.usuario);
     if (this.usuarioService.getCurrentUser() == null) {
       console.log('no obtuvo mi locationstorage, no hay nadie logueado ');
     } else {
@@ -137,8 +140,8 @@ export class PrincipalComponent implements OnInit {
     }
   }
   applyFilter1(event: Event): void {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource1.filter = filterValue.trim().toLowerCase();
+    const filterValue1 = (event.target as HTMLInputElement).value;
+    this.dataSource1.filter = filterValue1.trim().toLowerCase();
 
     if (this.dataSource1.paginator) {
       this.dataSource1.paginator.firstPage();

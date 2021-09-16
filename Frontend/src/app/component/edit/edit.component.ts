@@ -54,7 +54,7 @@ export class EditComponent implements OnInit {
     this.archivoservice.getListArchivo(this.usuario.id).subscribe(
       res => {
         this.List = res;             
-        console.log(this.List)
+        //console.log(this.List)
         this.dataSource.data = this.List;
         setTimeout(() => {
           this.dataSource.paginator = this.paginator;
@@ -82,13 +82,13 @@ export class EditComponent implements OnInit {
     } else {
       this.usuario = this.usuarioService.getCurrentUser();
       console.log('usuario logueado 1');
-      console.log(this.usuario);
+      //console.log(this.usuario);
       this.isLogged = true;
     }
   }
   getPermiso() {
     this.usuario = this.usuarioService.getCurrentUser();
-    console.log(this.usuario);
+    //console.log(this.usuario);
     if (this.usuarioService.getCurrentUser() == null) {
       console.log('no obtuvo mi locationstorage, no hay nadie logueado ');
     } else {
@@ -165,6 +165,7 @@ export class EditComponent implements OnInit {
                     this.dataSource.paginator = this.paginator;
                     this.dataSource.sort = this.sort;
                   });
+                  alert('Se Actualizo el registro exitosamente');
                 },
                 err => console.log(err)
               )

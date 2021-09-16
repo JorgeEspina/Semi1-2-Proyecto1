@@ -69,6 +69,9 @@ export class RegistroComponent implements OnInit {
               //console.log(this.retorna_usuario[0]);
               console.log(res);
               this.router.navigate(['/']);
+              alert(
+                'Se a registrado exitosamente'
+              );
             },
             (err) => {
               //console.log(err)
