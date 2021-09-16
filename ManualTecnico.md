@@ -89,7 +89,7 @@ rápida, segura y fácil.
   
   6. Luego de creada la Subnet Group, crearemos la base de datos para ellos nos dirigiremos a "Databases" tal y como se muestra en la siguiente imagen.
 
-  ![Arquitectura](ImgAWS/DatabaseDashboard.JPG "Database Dashboard")
+  ![Arquitectura](ImgAWS/DatabaseDashborard.JPG "Database Dashboard")
   
   7. Para crear la base de datos, presionaremos el botón "Create Database"
 
